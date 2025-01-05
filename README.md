@@ -2,9 +2,15 @@
 
 Integrate PayPal Orders API with Node.js, using Express, EJS and Axios.
 
-### Version: 1.0.0
-
 ### Usage
+
+```sh
+$ npm install express ejs dotenv axois
+```
+
+```sh
+$ npm install nodemon
+```
 
 ```sh
 $ npm install
