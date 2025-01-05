@@ -24,7 +24,7 @@ app.get('/complete-order', async (req, res) => {
     try {
         await paypal.capturePayment(req.query.token)
 
-        res.send('Course purchased successfully')
+        res.send('purchased successfully')
     } catch (error) {
         res.send('Error: ' + error)
     }
