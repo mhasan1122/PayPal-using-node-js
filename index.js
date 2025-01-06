@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Configure session middleware
 app.use(
     session({
-        secret: 'your-secret-key', // Replace with a strong secret key
+        secret: 'D3r!s9Tq8@q9!34M5A7n2LzR6nFh9X8b#4XzL%k2dR8@xY6wF!9r1T2vE9bRjZ6o9S7K9sU#V0j5J', 
         resave: false,
         saveUninitialized: true,
         cookie: { secure: false }, // Use `true` only if using HTTPS
