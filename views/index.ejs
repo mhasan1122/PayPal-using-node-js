@@ -1,15 +1,60 @@
+// views/index.ejs
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayPal with Node.js</title>
+    <script>
+        function openPopup() {
+            document.getElementById('popup-form').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup-form').style.display = 'none';
+        }
+
+        function submitForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            if (paymentMethod === 'paypal') {
+                const form = document.getElementById('payment-form');
+                form.name.value = name;
+                form.email.value = email;
+                form.phoneNumber.value = phoneNumber;
+                form.submit();
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>Paypal</h1>
     <h2>Price: $100.00</h2>
-    <form action="/pay" method="post">
-        <input type="submit" value="Buy">
+    <button onclick="openPopup()">Buy</button>
+
+    <div id="popup-form" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border:1px solid black;">
+        <h3>Enter your details</h3>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required><br>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" required><br>
+
+        <label>Select Payment:</label><br>
+        <input type="radio" name="paymentMethod" value="paypal" required> PayPal<br>
+
+        <button onclick="submitForm()">Pay</button>
+        <button onclick="closePopup()">Cancel</button>
+    </div>
+
+    <form id="payment-form" action="/pay" method="post" style="display:none">
+        <input type="hidden" name="name">
+        <input type="hidden" name="email">
+        <input type="hidden" name="phoneNumber">
     </form>
 </body>
 </html>
