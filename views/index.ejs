@@ -1,12 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayPal with Node.js</title>
+    <style>
+        /* Add a red border style for validation error */
+        .error {
+            border: 2px solid red;
+        }
+    </style>
     <script>
         function openPopup() {
+            const priceInput = document.getElementById('price');
+            if (!priceInput.value || priceInput.value <= 0) {
+                // Highlight the price box with red border if it's empty or invalid
+                priceInput.classList.add('error');
+                alert('Please enter a valid price.');
+                return;
+            }
+            // Remove the error class if the input is valid
+            priceInput.classList.remove('error');
+
+            // Show the popup form
             document.getElementById('popup-form').style.display = 'block';
         }
 
@@ -18,35 +34,37 @@
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const phoneNumber = document.getElementById('phoneNumber').value;
-            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+            const price = document.getElementById('price').value; // Get price value
 
-            if (paymentMethod === 'paypal') {
-                const form = document.getElementById('payment-form');
-                form.name.value = name;
-                form.email.value = email;
-                form.phoneNumber.value = phoneNumber;
-                form.submit();
-            }
+            // Add validation to ensure details are filled (if needed)
+
+            const form = document.getElementById('payment-form');
+            form.name.value = name;
+            form.email.value = email;
+            form.phoneNumber.value = phoneNumber;
+            form.price.value = price; // Set price in hidden form
+            form.submit();
         }
     </script>
 </head>
 <body>
-    <h1>Paypal</h1>
-    <h2>Price: $100.00</h2>
+    
+    <label for="price">Price: </label>
+    <input type="number" id="price"  min="0.01" step="0.01" placeholder="USD" style="margin-right: 20px; padding: 5px" required><br>
     <button onclick="openPopup()">Buy</button>
 
     <div id="popup-form" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border:1px solid black;">
         <h3>Enter your details</h3>
-        <label for="name">Name:</label>
-        <input type="text" id="name" required><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" required><br>
-        <label for="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" required><br>
+       <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required><br>
 
-        <label>Select Payment:</label><br>
-        <input type="radio" name="paymentMethod" value="paypal" required> PayPal<br>
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required><br>
 
+  <label for="phoneNumber">Phone Number:</label>
+  <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{10}" required>
+
+        
         <button onclick="submitForm()">Pay</button>
         <button onclick="closePopup()">Cancel</button>
     </div>
@@ -55,6 +73,7 @@
         <input type="hidden" name="name">
         <input type="hidden" name="email">
         <input type="hidden" name="phoneNumber">
+        <input type="hidden" name="price">
     </form>
 </body>
 </html>
